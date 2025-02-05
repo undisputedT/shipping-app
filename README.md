@@ -1,51 +1,100 @@
-# React + TypeScript + Vite
+# ShipEase - Shipping Management Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern shipping management application built with React, TypeScript, and Vite. ShipEase provides an intuitive interface for booking and managing shipments with features like real-time price calculation and dynamic form validation.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Multi-step booking form with progress tracking
+- Real-time shipping price calculation
+- Image upload for packages
+- Form validation
+- Responsive design
+- Animated page transitions
+- Dynamic shipping method selection based on shipment type
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Node.js (v14.0.0 or higher)
+- npm or yarn
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/shipease.git
+cd shipease
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
 ```
-# shipping-app
+
+### Required Dependencies
+
+- `formik`: Form management
+- `yup`: Form validation
+- `framer-motion`: Animations
+- `react-router-dom`: Routing
+- `lucide-react`: Icons
+- `tailwindcss`: Styling
+
+## Development
+
+Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## Build
+
+Create a production build:
+```bash
+npm run build
+# or
+yarn build
+```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── BookingForm.tsx
+│   ├── ShipmentDetails.tsx
+│   ├── SenderDetails.tsx
+│   ├── ReceiverDetails.tsx
+│   └── SuccessPage.tsx
+├── assets/
+│   └── images/
+└── ...
+```
+
+## Usage
+
+1. Navigate to the landing page
+2. Click "Book a Shipment"
+3. Fill in shipment details:
+   - Select shipment type (local/foreign)
+   - Enter package details
+   - Upload package images (optional)
+4. Complete sender and receiver information
+5. Review summary and submit
+
+## License
+
+MIT
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
