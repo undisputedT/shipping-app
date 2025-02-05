@@ -249,56 +249,59 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             <span>Insurance</span>
           </label>
         </div>
-                <div className="relative">
-          <label
-            htmlFor="packageImages"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Package Images (Max 2)
-          </label>
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-            <input
-              type="file"
-              id="packageImages"
-              name="packageImages"
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload}
-              className="hidden"
-            />
-            <label
-              htmlFor="packageImages"
+        <div className="relative">
+        <span className="block text-sm font-medium text-gray-700 mb-2">
+          Package Images (Max 2)
+        </span>
+        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+          <input
+            type="file"
+            id="packageImages"
+            name="packageImages"
+            accept="image/*"
+            multiple
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+          
+          {(!values.packageImages || values.packageImages.length === 0) ? (
+            <label 
+              htmlFor="packageImages" 
               className="cursor-pointer block text-center p-4 hover:bg-gray-50 rounded-md transition-colors"
             >
-              <span className="text-blue-600">Click to upload</span> or drag and
-              drop
-              <p className="text-xs text-gray-500 mt-1">
-                PNG, JPG, GIF up to 10MB
-              </p>
+              <span className="text-blue-600">Click to upload</span> or drag and drop
+              <p className="text-xs text-gray-500 mt-1">PNG, JPG, GIF up to 10MB</p>
             </label>
-
-            {values.packageImages && values.packageImages.length > 0 && (
-              <div className="mt-4 grid grid-cols-2 gap-4">
-                {values.packageImages.map((image, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={image}
-                      alt={`Package ${index + 1}`}
-                      className="w-full h-40 object-cover rounded-md"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteImage(index)}
-                      className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              {values.packageImages.map((image, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={image}
+                    alt={`Package ${index + 1}`}
+                    className="w-full h-40 object-cover rounded-md"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(index)}
+                    className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
+                  {(values.packageImages || []).length < 2 && (
+                    <label 
+                      htmlFor="packageImages"
+                      className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer rounded-md"
                     >
-                      <X size={16} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                      Add Another Image
+                    </label>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+      </div>
         <div>
           <label
             htmlFor="specialInstructions"
