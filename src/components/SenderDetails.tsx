@@ -1,6 +1,6 @@
-import type React from "react"
-import { Field, ErrorMessage } from "formik"
-import { motion } from "framer-motion"
+import type React from "react";
+import { Field, ErrorMessage } from "formik";
+import { motion } from "framer-motion";
 
 interface SenderDetailsProps {
   values: {
@@ -26,14 +26,19 @@ interface SenderDetailsProps {
 const SenderDetails: React.FC<SenderDetailsProps> = () => {
   const inputVariants = {
     focus: { scale: 1.05, boxShadow: "0px 0px 8px rgba(0,0,0,0.2)" },
-  }
+  };
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4 text-white">Sender Details</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-white md:text-black">
+        Sender Details
+      </h2>
       <div className="space-y-4">
         <div>
-          <label htmlFor="senderName" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="senderName"
+            className="block text-sm font-medium text-gray-700"
+          >
             Name
           </label>
           <Field
@@ -45,11 +50,18 @@ const SenderDetails: React.FC<SenderDetailsProps> = () => {
             whileFocus="focus"
             variants={inputVariants}
           />
-          <ErrorMessage name="senderName" component="div" className="text-red-500 text-sm" />
+          <ErrorMessage
+            name="senderName"
+            component="div"
+            className="text-red-500 text-xs pl-1 pt-1"
+          />
         </div>
 
         <div>
-          <label htmlFor="senderEmail" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="senderEmail"
+            className="block text-sm font-medium text-gray-700"
+          >
             Email
           </label>
           <Field
@@ -61,11 +73,18 @@ const SenderDetails: React.FC<SenderDetailsProps> = () => {
             whileFocus="focus"
             variants={inputVariants}
           />
-          <ErrorMessage name="senderEmail" component="div" className="text-red-500 text-sm" />
+          <ErrorMessage
+            name="senderEmail"
+            component="div"
+            className="text-red-500 text-xs pl-1 pt-1"
+          />
         </div>
 
         <div>
-          <label htmlFor="senderPhone" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="senderPhone"
+            className="block text-sm font-medium text-gray-700"
+          >
             Phone
           </label>
           <Field
@@ -77,11 +96,18 @@ const SenderDetails: React.FC<SenderDetailsProps> = () => {
             whileFocus="focus"
             variants={inputVariants}
           />
-          <ErrorMessage name="senderPhone" component="div" className="text-red-500 text-sm" />
+          <ErrorMessage
+            name="senderPhone"
+            component="div"
+            className="text-red-500 text-xs pl-1 pt-1"
+          />
         </div>
 
         <div>
-          <label htmlFor="senderAddress" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="senderAddress"
+            className="block text-sm font-medium text-gray-700"
+          >
             Address
           </label>
           <Field
@@ -91,11 +117,15 @@ const SenderDetails: React.FC<SenderDetailsProps> = () => {
             rows={3}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
-          <ErrorMessage name="senderAddress" component="div" className="text-red-500 text-sm" />
+          <ErrorMessage
+            name="senderAddress"
+            component="div"
+            className="text-red-500 text-xs pl-1 pt-1"
+          />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SenderDetails
+export default SenderDetails;

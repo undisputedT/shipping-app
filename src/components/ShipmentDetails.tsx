@@ -93,7 +93,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4 text-white">
+      <h2 className="text-2xl font-semibold mb-4 text-white md:text-black">
         Shipment Details
       </h2>
       <div className="space-y-4">
@@ -117,7 +117,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
           <ErrorMessage
             name="shipmentType"
             component="div"
-            className="text-red-500 text-sm"
+            className="text-red-500 text-xs pl-1 pt-1"
           />
         </div>
         {values.shipmentType && (
@@ -150,7 +150,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             <ErrorMessage
               name="shippingMethod"
               component="div"
-              className="text-red-500 text-sm"
+              className="text-red-500 text-xs pl-1 pt-1"
             />
           </div>
         )}
@@ -176,7 +176,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
           <ErrorMessage
             name="weight"
             component="div"
-            className="text-red-500 text-sm"
+            className="text-red-500 text-xs pl-1 pt-1"
           />
         </div>
         <div>
@@ -198,7 +198,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               <ErrorMessage
                 name="dimensions.length"
                 component="div"
-                className="text-red-500 text-sm"
+                className="text-red-500 text-xs pl-1 pt-1"
               />
             </div>
             <div>
@@ -215,7 +215,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               <ErrorMessage
                 name="dimensions.width"
                 component="div"
-                className="text-red-500 text-sm"
+                className="text-red-500 text-xs pl-1 pt-1"
               />
             </div>
             <div>
@@ -232,7 +232,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               <ErrorMessage
                 name="dimensions.height"
                 component="div"
-                className="text-red-500 text-sm"
+                className="text-red-500 text-xs pl-1 pt-1"
               />
             </div>
           </div>
@@ -250,58 +250,61 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
           </label>
         </div>
         <div className="relative">
-        <span className="block text-sm font-medium text-gray-700 mb-2">
-          Package Images (Max 2)
-        </span>
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-          <input
-            type="file"
-            id="packageImages"
-            name="packageImages"
-            accept="image/*"
-            multiple
-            onChange={handleImageUpload}
-            className="hidden"
-          />
-          
-          {(!values.packageImages || values.packageImages.length === 0) ? (
-            <label 
-              htmlFor="packageImages" 
-              className="cursor-pointer block text-center p-4 hover:bg-gray-50 rounded-md transition-colors"
-            >
-              <span className="text-blue-600">Click to upload</span> or drag and drop
-              <p className="text-xs text-gray-500 mt-1">PNG, JPG, GIF up to 10MB</p>
-            </label>
-          ) : (
-            <div className="grid grid-cols-2 gap-4">
-              {values.packageImages.map((image, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={image}
-                    alt={`Package ${index + 1}`}
-                    className="w-full h-40 object-cover rounded-md"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteImage(index)}
-                    className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
-                  >
-                    <X size={16} />
-                  </button>
-                  {(values.packageImages || []).length < 2 && (
-                    <label 
-                      htmlFor="packageImages"
-                      className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer rounded-md"
+          <span className="block text-sm font-medium text-gray-700 mb-2">
+            Package Images (Max 2)
+          </span>
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+            <input
+              type="file"
+              id="packageImages"
+              name="packageImages"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+
+            {!values.packageImages || values.packageImages.length === 0 ? (
+              <label
+                htmlFor="packageImages"
+                className="cursor-pointer block text-center p-4 hover:bg-gray-50 rounded-md transition-colors"
+              >
+                <span className="text-blue-600">Click to upload</span> or drag
+                and drop
+                <p className="text-xs text-gray-500 mt-1">
+                  PNG, JPG, GIF up to 10MB
+                </p>
+              </label>
+            ) : (
+              <div className="grid grid-cols-2 gap-4">
+                {values.packageImages.map((image, index) => (
+                  <div key={index} className="relative group">
+                    <img
+                      src={image}
+                      alt={`Package ${index + 1}`}
+                      className="w-full h-40 object-cover rounded-md"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteImage(index)}
+                      className="absolute top-2 right-2 p-1 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
                     >
-                      Add Another Image
-                    </label>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+                      <X size={16} />
+                    </button>
+                    {(values.packageImages || []).length < 2 && (
+                      <label
+                        htmlFor="packageImages"
+                        className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer rounded-md"
+                      >
+                        Add Another Image
+                      </label>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
         <div>
           <label
             htmlFor="specialInstructions"
@@ -320,7 +323,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
           <ErrorMessage
             name="specialInstructions"
             component="div"
-            className="text-red-500 text-sm"
+            className="text-red-500 text-xs pl-1 pt-1"
           />
         </div>
         <motion.div

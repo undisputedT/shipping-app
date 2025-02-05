@@ -1,7 +1,6 @@
 import type React from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import LandingPage from "./components/LandingPage"
-import LoginPage from "./components/LoginPage"
 import BookingForm from "./components/BookingForm"
 import Dashboard from "./components/Dashboard"
 import SuccessPage from "./components/SuccessPage"
@@ -15,7 +14,6 @@ const App: React.FC = () => {
         <div className="">
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
             <Route path="/book" element={<BookingForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/success" element={<SuccessPage />} />

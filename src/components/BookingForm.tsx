@@ -152,7 +152,7 @@ const BookingForm: React.FC = () => {
 
   return (
     <div
-      className="container mx-auto px-4 py-20 md:py-12 h-full bg-cover bg-no-repeat bg-center"
+      className="container mx-auto px-4 py-20 md:py-12 h-screen bg-cover bg-no-repeat bg-center"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="max-w-3xl mx-auto flex flex-col gap-2">
