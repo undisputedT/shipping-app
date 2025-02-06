@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, FormikErrors, FormikTouched } from "formik";
 import * as Yup from "yup";
 import { motion, AnimatePresence } from "framer-motion";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../features/ProgressBar";
 import ShipmentDetails from "./ShipmentDetails";
 import SenderDetails from "./SenderDetails";
 import ReceiverDetails from "./RecieverDetails";
-import Summary from "./Summary";
+import Summary from "../pages/Summary";
 import backgroundImage from "../assets/images/background-image.webp";
+
+
 
 const steps = [
   "Shipment Details",
@@ -54,6 +56,7 @@ const BookingForm: React.FC = () => {
       height: "",
     },
     fragile: false,
+    fragileItemType: "",
     insurance: false,
     specialInstructions: "",
     senderName: "",
@@ -64,6 +67,7 @@ const BookingForm: React.FC = () => {
     receiverEmail: "",
     receiverPhone: "",
     receiverAddress: "",
+    deliveryDate: null as Date | null,
   };
 
   const calculatePrice = (values: typeof initialValues) => {
@@ -152,7 +156,7 @@ const BookingForm: React.FC = () => {
 
   return (
     <div
-      className="container mx-auto px-4 py-20 md:py-12 h-screen bg-cover bg-no-repeat bg-center"
+      className="container mx-auto px-4 py-20 md:py-12 h-full bg-cover bg-no-repeat bg-center"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="max-w-3xl mx-auto flex flex-col gap-2">

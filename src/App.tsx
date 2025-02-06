@@ -2,7 +2,7 @@ import type React from "react"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import LandingPage from "./components/LandingPage"
 import BookingForm from "./components/BookingForm"
-import Dashboard from "./components/Dashboard"
+import Dashboard from "./pages/Dashboard"
 import SuccessPage from "./components/SuccessPage"
 import Navbar from "./components/Navbar"
 

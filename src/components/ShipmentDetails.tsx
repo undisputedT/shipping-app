@@ -1,8 +1,10 @@
 import type React from "react";
 import { Field, ErrorMessage, useFormikContext } from "formik";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import ShippingRecommendation from "./ShippingRecommendation";
+import { X } from "lucide-react";
 
 interface ShipmentDetailsProps {
   values: {
@@ -15,9 +17,11 @@ interface ShipmentDetailsProps {
       height: string;
     };
     fragile: boolean;
+    fragileItemType: string;
     insurance: boolean;
     specialInstructions: string;
     receiverAddress: string;
+    deliveryDate: Date | null;
     packageImages?: string[];
   };
   errors?: {
@@ -30,9 +34,11 @@ interface ShipmentDetailsProps {
       height?: string;
     };
     fragile?: string;
+    fragileItemType?: string;
     insurance?: string;
     specialInstructions?: string;
     receiverAddress?: string;
+    deliveryDate?: string;
   };
   touched?: {
     shipmentType?: boolean;
@@ -44,9 +50,11 @@ interface ShipmentDetailsProps {
       height?: boolean;
     };
     fragile?: boolean;
+    fragileItemType?: boolean;
     insurance?: boolean;
     specialInstructions?: boolean;
     receiverAddress?: boolean;
+    deliveryDate?: boolean;
   };
   calculatePrice: () => string;
 }
@@ -56,9 +64,28 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
   calculatePrice,
 }) => {
   const { setFieldValue } = useFormikContext();
-
   const inputVariants = {
     focus: { scale: 1.05, boxShadow: "0px 0px 8px rgba(0,0,0,0.2)" },
+  };
+
+  const getDeliveryDateRange = () => {
+    const today = new Date();
+    if (values.shipmentType === "local") {
+      if (values.shippingMethod === "express") {
+        const minDate = new Date(today);
+        minDate.setDate(today.getDate() + 1);
+        const maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + 3);
+        return { minDate, maxDate };
+      } else if (values.shippingMethod === "standard") {
+        const minDate = new Date(today);
+        minDate.setDate(today.getDate() + 5);
+        const maxDate = new Date(today);
+        maxDate.setDate(today.getDate() + 13);
+        return { minDate, maxDate };
+      }
+    }
+    return { minDate: today, maxDate: undefined };
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,9 +120,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
 
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-4 text-white md:text-black">
-        Shipment Details
-      </h2>
+      <h2 className="text-2xl font-semibold mb-4">Shipment Details</h2>
       <div className="space-y-4">
         <div>
           <label
@@ -117,7 +142,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
           <ErrorMessage
             name="shipmentType"
             component="div"
-            className="text-red-500 text-xs pl-1 pt-1"
+            className="text-red-500 text-sm"
           />
         </div>
         {values.shipmentType && (
@@ -150,11 +175,36 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             <ErrorMessage
               name="shippingMethod"
               component="div"
+              className="text-red-500 text-sm"
+            />
+          </div>
+        )}
+        {values.shipmentType === "local" && values.shippingMethod && (
+          <div>
+            <label
+              htmlFor="deliveryDate"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Expected Delivery Date
+            </label>
+            <DatePicker
+              selected={values.deliveryDate}
+              onChange={(date: Date | null) =>
+                setFieldValue("deliveryDate", date)
+              }
+              minDate={getDeliveryDateRange().minDate}
+              maxDate={getDeliveryDateRange().maxDate}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              placeholderText="Select delivery date"
+              dateFormat="MMMM d, yyyy"
+            />
+            <ErrorMessage
+              name="deliveryDate"
+              component="div"
               className="text-red-500 text-xs pl-1 pt-1"
             />
           </div>
         )}
-
         <div>
           <label
             htmlFor="weight"
@@ -176,14 +226,14 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
           <ErrorMessage
             name="weight"
             component="div"
-            className="text-red-500 text-xs pl-1 pt-1"
+            className="text-red-500 text-sm"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Dimensions (cm)
           </label>
-          <div className="flex space-x-2">
+          <div className="grid grid-cols-3 gap-4">
             <div>
               <Field
                 type="number"
@@ -198,7 +248,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               <ErrorMessage
                 name="dimensions.length"
                 component="div"
-                className="text-red-500 text-xs pl-1 pt-1"
+                className="text-red-500 text-sm"
               />
             </div>
             <div>
@@ -215,7 +265,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               <ErrorMessage
                 name="dimensions.width"
                 component="div"
-                className="text-red-500 text-xs pl-1 pt-1"
+                className="text-red-500 text-sm"
               />
             </div>
             <div>
@@ -232,7 +282,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
               <ErrorMessage
                 name="dimensions.height"
                 component="div"
-                className="text-red-500 text-xs pl-1 pt-1"
+                className="text-red-500 text-sm"
               />
             </div>
           </div>
@@ -242,6 +292,25 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             <Field type="checkbox" name="fragile" className="form-checkbox" />
             <span>Fragile Item</span>
           </label>
+          {values.fragile && (
+            <Field
+              as="select"
+              name="fragileItemType"
+              className="mt-2 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            >
+              <option value="">Select fragile item type</option>
+              <option value="glass">Glass</option>
+              <option value="electronics">Electronics</option>
+              <option value="artwork">Artwork</option>
+              <option value="musical-instrument">Musical Instrument</option>
+              <option value="ceramics">Ceramics</option>
+            </Field>
+          )}
+          <ErrorMessage
+            name="fragileItemType"
+            component="div"
+            className="text-red-500 text-xs pl-1 pt-1"
+          />
         </div>
         <div>
           <label className="flex items-center space-x-2">
@@ -280,7 +349,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
                 {values.packageImages.map((image, index) => (
                   <div key={index} className="relative group">
                     <img
-                      src={image}
+                      src={image || "/placeholder.svg"}
                       alt={`Package ${index + 1}`}
                       className="w-full h-40 object-cover rounded-md"
                     />
@@ -310,8 +379,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             htmlFor="specialInstructions"
             className="block text-sm font-medium text-gray-700"
           >
-            Special Instructions{" "}
-            <span className=" text-gray-400">(optional)</span>
+            Special Instructions
           </label>
           <Field
             as="textarea"
@@ -319,11 +387,6 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({
             name="specialInstructions"
             rows={3}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
-          />
-          <ErrorMessage
-            name="specialInstructions"
-            component="div"
-            className="text-red-500 text-xs pl-1 pt-1"
           />
         </div>
         <motion.div

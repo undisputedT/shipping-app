@@ -11,7 +11,7 @@ const ShippingRecommendation: React.FC<ShippingRecommendationProps> = ({ weight,
   const [recommendation, setRecommendation] = useState("")
 
   useEffect(() => {
-    // This is a simplified recommendation logic. In a real app, this would be more complex and possibly use a backend AI service.
+
     const volume = dimensions.length * dimensions.width * dimensions.height
     if (weight < 1 && volume < 1000) {
       setRecommendation("Standard Shipping")
@@ -20,7 +20,7 @@ const ShippingRecommendation: React.FC<ShippingRecommendationProps> = ({ weight,
     } else {
       setRecommendation("Priority Shipping")
     }
-  }, [weight, dimensions]) // Removed unnecessary dependency: destination
+  }, [weight, dimensions]) 
 
   return (
     <div className="bg-blue-100 p-4 rounded-lg mt-4">
